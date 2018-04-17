@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23513286651698924}
   - component: {fileID: 33330952595611698}
   - component: {fileID: 65053598391107930}
+  - component: {fileID: 65577059065895334}
   m_Layer: 0
   m_Name: DisguiseBox
   m_TagString: Disguise
@@ -36,8 +37,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1511369533378470}
-  m_LocalRotation: {x: -0.00032790002, y: -0.70710677, z: -0.70710665, w: 0.0003277808}
-  m_LocalPosition: {x: 0.015785486, y: -0.5268541, z: -3.11264}
+  m_LocalRotation: {x: -0.5002317, y: -0.4997683, z: -0.49976817, w: 0.5002317}
+  m_LocalPosition: {x: -1.7158, y: -0.49686, z: -1.5479}
   m_LocalScale: {x: 0.0254, y: 0.0254, z: 0.0254}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,8 +57,9 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 366679cf3713065428e131e78f9593ee, type: 2}
+  - {fileID: 2100000, guid: 375ddfb36902f9c419f0f6c356aaf9fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,6 +98,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 17.11107, y: 44.30783, z: 58.668114}
   m_Center: {x: 0.39518848, y: 0.57139736, z: 29.210201}
+--- !u!65 &65577059065895334
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511369533378470}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 15.357115, y: 45.450634, z: 58.668118}
+  m_Center: {x: 0.00000009092696, y: -0.0000065029785, z: 29.210201}
 --- !u!114 &114973401210003880
 MonoBehaviour:
   m_ObjectHideFlags: 1
