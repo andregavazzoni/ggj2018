@@ -14,20 +14,15 @@ public class Victory : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButtonDown("X360_B01"))
+        
+        if (string.IsNullOrEmpty(nextScene))
         {
             Initiate.Fade("Menu", Color.black, fadeTime);
         }
-        else if (Input.GetButtonDown("Fire1") || SimpleMobileController.GetInstance().getAction1())
+        else
         {
-            if (string.IsNullOrEmpty(nextScene))
-            {
-                Initiate.Fade("Credits", Color.black, fadeTime);
-            }
-            else
-            {
-                Initiate.Fade(nextScene, Color.black, fadeTime);
-            }
+            Initiate.Fade(nextScene, Color.black, fadeTime);
         }
+
     }
 }
