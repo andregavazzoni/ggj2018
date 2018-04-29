@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Firebase.Auth;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ public class SignUpFormHandler : MonoBehaviour
 
     private void Awake()
     {
-        
+        Debug.Log("Start");
     }
 
     public void SetUsername(InputField username) {
@@ -27,27 +28,65 @@ public class SignUpFormHandler : MonoBehaviour
 
     public void SaveUser()
     {
-        Debug.Log(UsernameInput.text);
-        Debug.Log(PasswordInput.text);
+        var username = (UsernameInput.text ?? "").Trim();
+        var password = (PasswordInput.text ?? "").Trim();
+        Text usernameError = UsernameInput.gameObject.transform.Find("Error").GetComponent("Text") as Text;
+        Text passwordError = PasswordInput.gameObject.transform.Find("Error").GetComponent("Text") as Text;
+        usernameError.text = "";
+        var hasError = false;
 
-        var auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        auth.CreateUserWithEmailAndPasswordAsync(UsernameInput.text, PasswordInput.text).ContinueWith(task =>
+        Debug.Log(username);
+        Debug.Log(password);
+
+
+        if (username == "") {
+            hasError = true;
+            usernameError.text = "E-mail é obrigatório";
+        }
+
+        if (password == "")
         {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                return;
-            }
+            hasError = true;
+            passwordError.text = "Senha é obrigatório";
+        }
 
-            // Firebase user has been created.
-            Firebase.Auth.FirebaseUser newUser = task.Result;
-            Debug.LogFormat("Firebase user created successfully: {0} ({1})",
-                newUser.DisplayName, newUser.UserId);
-        });
+        Debug.Log("Has Error: " + hasError.ToString());
+
+        if (!hasError) {
+            Debug.Log("Calling FirebaseAuth");
+            var auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            auth.CreateUserWithEmailAndPasswordAsync(UsernameInput.text, PasswordInput.text).ContinueWith(task =>
+            {
+                if (task.IsCanceled)
+                {
+                    Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
+                    return;
+                }
+                if (task.IsFaulted)
+                {
+                    Firebase.FirebaseException firebaseException = task.Exception.InnerExceptions[0] as Firebase.FirebaseException;
+                    Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + firebaseException);
+                    Debug.LogError("Error Message: " + firebaseException.Message);
+                    Debug.LogError("Error Code: " + firebaseException.ErrorCode);
+
+
+                    if ((AuthError) firebaseException.ErrorCode == AuthError.EmailAlreadyInUse) {
+                        usernameError.text = "E-mail já está sendo usado em outra conta.";
+                    }
+
+                    if ((AuthError)firebaseException.ErrorCode == AuthError.InvalidEmail)
+                    {
+                        usernameError.text = "E-mail inválido.";
+                    }
+
+                    return;
+                }
+
+                // Firebase user has been created.
+                Firebase.Auth.FirebaseUser newUser = task.Result;
+                Debug.LogFormat("Firebase user created successfully: {0} ({1})",
+                    newUser.DisplayName, newUser.UserId);
+            });
+        }
     }
 }
