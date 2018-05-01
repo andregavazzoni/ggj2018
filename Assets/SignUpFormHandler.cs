@@ -14,7 +14,10 @@ public class SignUpFormHandler : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Start");
+        Debug.Log("SignUpFormHandler initialized");
+        DataStorage.storage.Load();
+        Debug.Log(DataStorage.userId);
+        Debug.Log("SignUpFormHandler initialized ended");
     }
 
     public void SetUsername(InputField username) {
@@ -84,6 +87,9 @@ public class SignUpFormHandler : MonoBehaviour
 
                 // Firebase user has been created.
                 Firebase.Auth.FirebaseUser newUser = task.Result;
+                Debug.Log(newUser);
+                DataStorage.userId = newUser.UserId;
+                DataStorage.storage.Save();
                 Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                     newUser.DisplayName, newUser.UserId);
             });
