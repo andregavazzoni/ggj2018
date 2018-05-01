@@ -4,8 +4,7 @@ using Firebase.Auth;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SignUpFormHandler : MonoBehaviour
-{
+public class LoginFormHandler : MonoBehaviour {
 
     private Firebase.Auth.FirebaseAuth _auth;
 
@@ -20,7 +19,8 @@ public class SignUpFormHandler : MonoBehaviour
         Debug.Log("SignUpFormHandler initialized ended");
     }
 
-    public void SetUsername(InputField username) {
+    public void SetUsername(InputField username)
+    {
         UsernameInput = username;
     }
 
@@ -29,7 +29,7 @@ public class SignUpFormHandler : MonoBehaviour
         PasswordInput = password;
     }
 
-    public void SaveUser()
+    public void LoginUser()
     {
         var username = (UsernameInput.text ?? "").Trim();
         var password = (PasswordInput.text ?? "").Trim();
@@ -42,7 +42,8 @@ public class SignUpFormHandler : MonoBehaviour
         Debug.Log(password);
 
 
-        if (username == "") {
+        if (username == "")
+        {
             hasError = true;
             usernameError.text = "E-mail é obrigatório";
         }
@@ -55,43 +56,41 @@ public class SignUpFormHandler : MonoBehaviour
 
         Debug.Log("Has Error: " + hasError.ToString());
 
-        if (!hasError) {
+        if (!hasError)
+        {
             Debug.Log("Calling FirebaseAuth");
             var auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-            auth.CreateUserWithEmailAndPasswordAsync(UsernameInput.text, PasswordInput.text).ContinueWith(task =>
+            auth.SignInWithEmailAndPasswordAsync(username, password).ContinueWith(task =>
             {
                 if (task.IsCanceled)
                 {
                     Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
                     return;
                 }
+
                 if (task.IsFaulted)
                 {
                     Firebase.FirebaseException firebaseException = task.Exception.InnerExceptions[0] as Firebase.FirebaseException;
-                    Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + firebaseException);
                     Debug.LogError("Error Message: " + firebaseException.Message);
                     Debug.LogError("Error Code: " + firebaseException.ErrorCode);
 
 
-                    if ((AuthError) firebaseException.ErrorCode == AuthError.EmailAlreadyInUse) {
-                        usernameError.text = "E-mail já está sendo usado em outra conta.";
-                    }
-
-                    if ((AuthError)firebaseException.ErrorCode == AuthError.InvalidEmail)
-                    {
-                        usernameError.text = "E-mail inválido.";
-                    }
+                    //if ((AuthError)firebaseException.ErrorCode == AuthError.InvalidEmail)
+                    //{
+                    //    usernameError.text = "E-mail inválido.";
+                    //}
 
                     return;
                 }
 
                 // Firebase user has been created.
-                Firebase.Auth.FirebaseUser newUser = task.Result;
-                Debug.Log(newUser);
-                DataStorage.userId = newUser.UserId;
+                Firebase.Auth.FirebaseUser user = task.Result;
+                Debug.Log(user);
+                DataStorage.userId = user.UserId;
                 DataStorage.storage.Save();
-                Debug.LogFormat("Firebase user created successfully: {0} ({1})",
-                    newUser.DisplayName, newUser.UserId);
+                Debug.LogFormat("User signed in successfully: {0} ({1})",
+                                user.DisplayName, user.UserId);
+                Initiate.Fade("Scenes/Levels/Fase1",Color.black, 2);
             });
         }
     }

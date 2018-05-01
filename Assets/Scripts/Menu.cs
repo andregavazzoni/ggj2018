@@ -29,6 +29,7 @@ public class Menu : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        DataStorage.storage.Load();
     }
 
     void UpdateMenuPos() {
@@ -78,6 +79,14 @@ public class Menu : MonoBehaviour {
     }
 
     public void PlayGame() {
-        Initiate.Fade(firstScene, Color.black, fadeTime);
+        Debug.LogFormat("PlayGame Action: UserID: {0}", DataStorage.userId);
+
+
+        if (DataStorage.userId != null) {
+            Initiate.Fade(firstScene, Color.black, fadeTime);    
+        } else {
+            goToScene("Authorization");
+        }
+
     }
 }
