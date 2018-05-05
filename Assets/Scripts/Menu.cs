@@ -81,10 +81,6 @@ public class Menu : MonoBehaviour {
     public void PlayGame() {
         Debug.LogFormat("PlayGame Action: UserID: {0}", DataStorage.Data.userId);
 
-
-        var score = RemoteStorage.storage.GetScore("Level1");
-        Debug.Log("SCORE: " + score);
-
         if ( (DataStorage.Data.userId ?? "") != "") {
             Initiate.Fade(firstScene, Color.black, fadeTime);    
         } else {

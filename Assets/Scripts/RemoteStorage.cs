@@ -51,7 +51,7 @@ public class RemoteStorage : MonoBehaviour
         return request;
     }
 
-    public Score GetScore(string level)
+    public void GetScore(string level, Func<UnityWebRequest> callback = null)
     {
         var scoreData = new Score
         {
@@ -69,16 +69,14 @@ public class RemoteStorage : MonoBehaviour
         request.uploadHandler = new UploadHandlerRaw(body);
 
         request.SetRequestHeader("Content-Type", "application/json");
-        StartCoroutine(SendPost(request));
-
-        return JsonUtility.FromJson<Score>(request.downloadHandler.text);
+        StartCoroutine(SendPost(request, callback));
     }
 
 
-    private IEnumerator SendPost(UnityWebRequest request)
+    private IEnumerator SendPost(UnityWebRequest request, Func<UnityWebRequest> callback = null)
     {
         yield return request.SendWebRequest();
-
+        //callback(request);
         Debug.Log(request);
         if (request.isNetworkError || request.isHttpError)
         {
