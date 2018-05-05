@@ -79,10 +79,10 @@ public class Menu : MonoBehaviour {
     }
 
     public void PlayGame() {
-        Debug.LogFormat("PlayGame Action: UserID: {0}", DataStorage.userId);
+        Debug.LogFormat("PlayGame Action: UserID: {0}", DataStorage.Data.userId);
 
 
-        if (DataStorage.userId != null) {
+        if ( (DataStorage.Data.userId ?? "") != "") {
             Initiate.Fade(firstScene, Color.black, fadeTime);    
         } else {
             goToScene("Authorization");

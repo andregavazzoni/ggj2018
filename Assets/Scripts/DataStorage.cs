@@ -11,6 +11,7 @@ public class DataStorage : MonoBehaviour {
     private string fileName = "/storage1.dat";
     //public static Firebase.Auth.FirebaseUser user;
     public static string userId;
+    public static Data Data = new Data();
 
     private void Awake()
 	{
@@ -26,9 +27,7 @@ public class DataStorage : MonoBehaviour {
         Debug.Log(Application.persistentDataPath + this.fileName);
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + this.fileName);
-        Data data = new Data();
-        data.userId = userId;
-        binaryFormatter.Serialize(file, data);
+        binaryFormatter.Serialize(file, Data);
         file.Close();
     }
 
@@ -38,16 +37,14 @@ public class DataStorage : MonoBehaviour {
         if (File.Exists(Application.persistentDataPath + this.fileName)) {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + this.fileName, FileMode.Open);
-            Data data = (Data)binaryFormatter.Deserialize(file);
+            Data = (Data)binaryFormatter.Deserialize(file);
             file.Close();
-
-            userId = data.userId;
         }
     }
 }
 
 [Serializable]
-class Data 
+public class Data 
 {
     //public Firebase.Auth.FirebaseUser user;
     public string userId;
