@@ -23,7 +23,6 @@ public class CollectableInfoItem : MonoBehaviour, Actionable {
 
     public void Update()
     {
-        Debug.Log(LayerMask.GetMask("Player"));
         Collider[] colliders = Physics.OverlapSphere(transform.position, OutlineTriggerRadious, LayerMask.GetMask("Player"));
 
         if (colliders.Length > 0 && OutlineEffect.enabled == false)
