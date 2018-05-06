@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 33330952595611698}
   - component: {fileID: 65053598391107930}
   - component: {fileID: 65577059065895334}
+  - component: {fileID: 114020994187271914}
   m_Layer: 0
   m_Name: DisguiseBox
   m_TagString: Disguise
@@ -110,6 +111,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.357115, y: 45.450634, z: 58.668118}
   m_Center: {x: 0.00000009092696, y: -0.0000065029785, z: 29.210201}
+--- !u!114 &114020994187271914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511369533378470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114973401210003880
 MonoBehaviour:
   m_ObjectHideFlags: 1
