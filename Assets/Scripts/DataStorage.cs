@@ -48,4 +48,13 @@ public class Data
 {
     //public Firebase.Auth.FirebaseUser user;
     public string userId;
+    public List<Stage> stages = new List<Stage>();
+}
+
+[Serializable]
+public class Stage
+{
+    public string id;
+    public bool completed;
+    public int score;
 }
