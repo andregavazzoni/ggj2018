@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "600548993269",
+    "firebase_url": "https://undercover-19bfd.firebaseio.com",
+    "project_id": "undercover-19bfd",
+    "storage_bucket": "undercover-19bfd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600548993269:android:f6480a88d343830a",
+        "android_client_info": {
+          "package_name": "br.curitiba.gavazzoni.undercover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600548993269-cf49uvc6ic3760fo77gk3031tn5to1ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3Dd0BkNq7JJkvwDxuzybAyPbijWFPEBQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

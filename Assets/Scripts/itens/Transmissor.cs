@@ -14,6 +14,24 @@ public class Transmissor : MonoBehaviour, Actionable {
         if (Config.getInstance().IsAllInfosCollected())
         {
             Debug.Log("All infos collected!!!");
+
+            DataStorage.storage.Load();
+
+            var stage = DataStorage.Data.stages.Find(x =>
+            {
+                return x.id == SceneManager.GetActiveScene().name;
+            });
+
+
+            if (stage == null) {
+                stage = new Stage();
+                DataStorage.Data.stages.Add(stage);
+            }
+
+            stage.completed = true;
+
+            DataStorage.storage.Save();
+
             FeedbackMessage.getInstance().AddMessage("Todas as informações coletadas", 5);
             Config.getInstance().SetNextScene(nextScene);
             Initiate.Fade("Victory", Color.black, 2f);
