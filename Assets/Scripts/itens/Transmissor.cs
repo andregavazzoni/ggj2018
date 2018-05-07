@@ -17,21 +17,6 @@ public class Transmissor : MonoBehaviour, Actionable {
 
             DataStorage.storage.Load();
 
-            var stage = DataStorage.Data.stages.Find(x =>
-            {
-                return x.id == SceneManager.GetActiveScene().name;
-            });
-
-
-            if (stage == null) {
-                stage = new Stage();
-                DataStorage.Data.stages.Add(stage);
-            }
-
-            stage.completed = true;
-
-            DataStorage.storage.Save();
-
             FeedbackMessage.getInstance().AddMessage("Todas as informações coletadas", 5);
             var completionTime = Time.timeSinceLevelLoad;
             var score = 0;
@@ -47,12 +32,23 @@ public class Transmissor : MonoBehaviour, Actionable {
                 score = 1;
             }
 
-            Stage stage = DataStorage.Data.stages.Find(x => x.id == SceneManager.GetActiveScene().name);
+            var stage = DataStorage.Data.stages.Find(x =>
+            {
+                return x.id == SceneManager.GetActiveScene().name;
+            });
+
 
             if (stage == null)
             {
                 stage = new Stage();
+                DataStorage.Data.stages.Add(stage);
             }
+
+            stage.completed = true;
+            Debug.Log("User Saved Data: " + JsonUtility.ToJson(DataStorage.Data));
+
+            DataStorage.storage.Save();
+
 
             stage.id = SceneManager.GetActiveScene().name;
             stage.completed = true;

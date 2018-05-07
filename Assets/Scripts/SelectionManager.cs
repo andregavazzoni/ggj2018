@@ -16,12 +16,13 @@ public class SelectionManager : MonoBehaviour {
 	void Awake () {
         Debug.Log("Scene List");
         DataStorage.storage.Load();
-        var Data = DataStorage.Data;
+
+        var nextEnabled = false;
         
         for (var i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
             var scene = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
-
+            Color buttonColor = Color.gray;
 
             Regex regex = new Regex("^Fase[0-9]$", RegexOptions.IgnoreCase);
             if (regex.IsMatch(scene))
@@ -34,22 +35,34 @@ public class SelectionManager : MonoBehaviour {
                 button.GetComponent<Button>().enabled = scene == "Fase1" ? true : false;
                 //button.GetComponent<Button>().enabled = true;
 
-                if (Data.stages != null)
+                if (button.GetComponent<Button>().enabled = scene == "Fase1" || nextEnabled)
                 {
-                    foreach (var stage in Data.stages)
+                    buttonColor = Color.blue;
+                    nextEnabled = false;
+                }
+                
+
+                Debug.Log("Stages Count: " + DataStorage.Data.stages.Count);
+
+                if (DataStorage.Data.stages.Count > 0)
+                {
+
+                    DataStorage.Data.stages.ForEach(x =>
                     {
-                        if (stage.id == scene && stage.completed)
+                        if (x.id == scene && x.completed)
                         {
                             button.GetComponent<Button>().enabled = true;
+                            buttonColor = Color.green;
+                            nextEnabled = true;
                         }
-                    }
+                    });
                 }
 
                 if (button.GetComponent<Button>().enabled)
                 {
                     ColorBlock colorBlock = button.GetComponent<Button>().colors;
-                    colorBlock.normalColor = Color.blue;
-                    colorBlock.highlightedColor = Color.blue;
+                    colorBlock.normalColor = buttonColor;
+                    colorBlock.highlightedColor = buttonColor;
                     button.GetComponent<Button>().colors = colorBlock;
                 }
 
