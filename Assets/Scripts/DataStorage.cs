@@ -33,6 +33,7 @@ public class DataStorage : MonoBehaviour {
 
     public void Load() 
     {
+        Debug.Log("Saving Data in Local Storage");
         Debug.Log(Application.persistentDataPath + this.fileName);
         if (File.Exists(Application.persistentDataPath + this.fileName)) {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
